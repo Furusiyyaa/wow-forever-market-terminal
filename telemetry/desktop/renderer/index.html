@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Forever — Market Terminal</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="../node_modules/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top TradingView-style Toolbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand">FOREVER<span>TV</span></div>
+        <div class="search-wrap">
+          <input id="search-input" type="text" placeholder="Search 19,401 items (e.g. Arcane Crystal, Fel Hide)..." autocomplete="off" />
+          <div id="search-results" class="search-dropdown hidden"></div>
+        </div>
+        <div class="pill-group" id="range-group">
+          <button data-range="24h" class="pill">24H</button>
+          <button data-range="7d" class="pill active">7D</button>
+          <button data-range="30d" class="pill">30D</button>
+          <button data-range="all" class="pill">ALL</button>
+        </div>
+        <div class="pill-group" id="mode-group">
+          <button data-mode="area" class="pill active">Area</button>
+          <button data-mode="candles" class="pill">Candles</button>
+          <button data-mode="line" class="pill">Line</button>
+        </div>
+        <label class="inline-check">
+          <input id="toggle-min" type="checkbox" checked />
+          <span>Min overlay</span>
+        </label>
+      </div>
+
+      <div class="topbar-right">
+        <label class="inline-check" title="Automatically poll Blizzard API on interval">
+          <input id="auto-rescan" type="checkbox" checked />
+          <span>Auto</span>
+          <input id="interval-min" type="number" min="1" max="240" value="15" class="num-input" />
+          <span>m</span>
+        </label>
+        <button id="btn-scan" class="btn btn-secondary">Scan Now</button>
+        <button id="btn-service" class="btn btn-start">Start Feed</button>
+        <span id="status-badge" class="badge badge-off">● OFFLINE</span>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Left: Ticker Header + Chart -->
+      <section class="chart-pane">
+        <div class="ticker-bar">
+          <div class="ticker-main">
+            <button id="btn-pin" class="star-btn" title="Pin/Unpin to Watchlist">★</button>
+            <h1 id="ticker-name">Arcane Crystal</h1>
+            <span id="ticker-id" class="muted mono">#12363</span>
+            <span id="ticker-price" class="price mono">—</span>
+            <span id="ticker-change" class="chg mono">0.00%</span>
+          </div>
+          <div class="ticker-meta mono">
+            <span>Min: <strong id="meta-min">—</strong></span>
+            <span>Supply: <strong id="meta-qty">—</strong></span>
+            <span>Listings: <strong id="meta-listings">—</strong></span>
+            <span>Vendor: <strong id="meta-vendor">—</strong></span>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <div id="chart-legend" class="chart-legend mono"></div>
+          <div id="chart-container" class="chart-container"></div>
+          <div id="chart-empty" class="chart-empty hidden">
+            No price history snapshots for this item yet. Click <strong>Scan Now</strong> or enable <strong>Auto-Rescan</strong> to build history.
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Sidebar: Watchlist / Top Farms -->
+      <aside class="sidebar">
+        <div class="sidebar-tabs">
+          <button class="tab-btn active" data-tab="watchlist">Watchlist</button>
+          <button class="tab-btn" data-tab="farms">Top Farms</button>
+        </div>
+
+        <div id="tab-watchlist" class="tab-panel active">
+          <div class="list-header">
+            <span>Symbol</span>
+            <span class="right">p10 (g)</span>
+            <span class="right">Chg %</span>
+            <span class="right">Qty</span>
+          </div>
+          <div id="watchlist-body" class="list-body"></div>
+        </div>
+
+        <div id="tab-farms" class="tab-panel">
+          <div class="list-header farm-cols">
+            <span>Mob (Open World)</span>
+            <span class="right">Spwn</span>
+            <span class="right">EV/Kill</span>
+          </div>
+          <div id="farms-body" class="list-body"></div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Bottom Status Strip -->
+    <footer class="statusbar mono">
+      <div class="status-left">
+        <span id="sb-target">EU · Ruleset 1 · House 113</span>
+        <span class="sep">|</span>
+        <span>Last scan: <strong id="sb-last">—</strong></span>
+        <span class="sep">|</span>
+        <span>Blizzard dump: <strong id="sb-blizz">—</strong></span>
+        <span class="sep">|</span>
+        <span>Next auto: <strong id="sb-next">Offline</strong></span>
+      </div>
+      <div class="status-right">
+        <span id="sb-log" class="muted">Connecting...</span>
+        <button id="btn-db2" class="mini-btn">Sync DB2</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

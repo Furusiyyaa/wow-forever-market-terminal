@@ -1,0 +1,15 @@
+{
+  "name": "wow-forever-market-terminal",
+  "version": "1.0.0",
+  "description": "TradingView-style WoW Forever Auction House Market Terminal",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "lightweight-charts": "^4.2.3"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0"
+  }
+}

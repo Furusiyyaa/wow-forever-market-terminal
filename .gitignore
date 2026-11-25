@@ -1,0 +1,11 @@
+.env
+**/.env
+.venv/
+.venv-manager/
+work/
+__pycache__/
+*.pyc
+telemetry/desktop/node_modules/
+*.db
+*.db-wal
+*.db-shm
